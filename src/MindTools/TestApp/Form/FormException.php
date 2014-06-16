@@ -2,6 +2,6 @@
 
 namespace MindTools\TestApp\Form;
 
-class FormHandler
+class FormException extends \Exception
 {
 }

@@ -2,11 +2,37 @@
 
 namespace MindTools\TestApp\User;
 
+use MindTools\TestApp\User\Storage\StorageInterface;
+use MindTools\TestApp\Model\User;
+
+/**
+ * Class UserManager
+ *
+ * @package MindTools\TestApp\User
+ */
 class UserManager
 {
+    /** @var Storage\StorageInterface */
+    protected $storage;
 
-    public function createUser($argument1, $argument2, $argument3, $argument4)
+    /**
+     * @param StorageInterface $storage
+     */
+    public function __construct(StorageInterface $storage)
     {
-        // TODO: write logic here
+        $this->storage = $storage;
+    }
+
+    /**
+     * @param string $username
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     *
+     * @return User
+     */
+    public function createUser($username, $name, $email, $password)
+    {
+        return $this->storage->createUser($username, $name, $email, $password);
     }
 }

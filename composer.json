@@ -15,7 +15,9 @@
         "twig/twig": "~1.0",
         "symfony/validator": "~2.0",
         "swiftmailer/swiftmailer": "~5.0",
-        "phpspec/phpspec": "~2.0"
+        "phpspec/phpspec": "~2.0",
+        "pimple/pimple": "~2.0",
+        "symfony/routing": "~2.5"
     },
     "config": {
         "bin-dir": "bin"
