@@ -1,0 +1,23 @@
+{
+    "name": "mindtools/testapp",
+    "type": "project",
+    "description": "Test application for Mind Tools",
+    "authors": [
+        {
+            "name": "Gez Page"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "twig/twig": "~1.0",
+        "symfony/validator": "~2.0",
+        "swiftmailer/swiftmailer": "~5.0",
+        "phpspec/phpspec": "~2.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
