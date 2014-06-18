@@ -12,4 +12,12 @@ class FormValidationExceptionSpec extends ObjectBehavior
         $this->shouldHaveType('MindTools\TestApp\Form\Validator\FormValidationException');
         $this->shouldHaveType('\Exception');
     }
+
+    function it_should_store_vaildation_errors()
+    {
+        $errors = array('errors');
+
+        $this->setValidationErrors($errors);
+        $this->getValidationErrors()->shouldReturn($errors);
+    }
 }

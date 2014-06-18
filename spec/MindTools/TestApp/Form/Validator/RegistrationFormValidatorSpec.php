@@ -2,6 +2,7 @@
 
 namespace spec\MindTools\TestApp\Form\Validator;
 
+use MindTools\TestApp\Form\Validator\FormValidationException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -17,6 +18,25 @@ class RegistrationFormValidatorSpec extends ObjectBehavior
         $post = $this->makeValidPostArray();
 
         $this->validate($post)->shouldReturn(true);
+    }
+
+    function it_should_collect_validation_errors()
+    {
+        $post = array(
+            'name' => '',
+            'email' => '',
+            'username' => '',
+            'password' => '',
+        );
+
+        try {
+            $this->validate($post);
+        } catch (FormValidationException $e) {
+            foreach ($e->getValidationErrors() as $field => $error) {
+                $error->shouldBeString();
+                $field->shouldBeString();
+            }
+        }
     }
 
     function it_should_throw_validation_exception_if_fields_are_missing()

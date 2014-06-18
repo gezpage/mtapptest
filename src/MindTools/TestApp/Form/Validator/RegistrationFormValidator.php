@@ -4,11 +4,20 @@ namespace MindTools\TestApp\Form\Validator;
 
 class RegistrationFormValidator
 {
+    protected $errors = array();
+
     public function validate(array $post)
     {
         $this->validateFields($post);
         $this->validateUsername($post['username']);
         $this->validatePassword($post['password']);
+
+        if (count($this->errors) > 0) {
+            $exception = new FormValidationException('Form validation failed');
+            $exception->setValidationErrors($this->errors);
+
+            throw $exception;
+        }
 
         return true;
     }
@@ -25,26 +34,35 @@ class RegistrationFormValidator
     protected function validateUsername($username)
     {
         if (strlen($username) < 4) {
-            throw new FormValidationException('Username must be at least 4 characters');
+            $this->validationError('Username must be at least 4 characters', 'username');
         }
         if (1 === preg_match('/^[A-Z]*$/', $username)) {
-            throw new FormValidationException('Username cannot contain uppercase letters');
+            $this->validationError('Username cannot contain uppercase letters', 'username');
         }
         if (0 === preg_match('/^[a-zA-Z0-9_]*$/', $username)) {
-            throw new FormValidationException('Username cannot contain uppercase letters');
+            $this->validationError('Username cannot contain uppercase letters', 'username');
         }
     }
 
     protected function validatePassword($password)
     {
         if (strlen($password) < 8) {
-            throw new FormValidationException('Password must be at least 8 characters');
+            $this->validationError('Password must be at least 8 characters', 'password');
         }
         if (0 === preg_match('/[0-9]/', $password)) {
-            throw new FormValidationException('Password must have at least one numeric character.');
+            $this->validationError('Password must have at least one numeric character.', 'password');
         }
         if (0 === preg_match('/[A-Z]/', $password)) {
-            throw new FormValidationException('Password must have at least one uppercase letter.');
+            $this->validationError('Password must have at least one uppercase letter.', 'password');
+        }
+    }
+
+    protected function validationError($message, $field = null)
+    {
+        if (null === $field) {
+            $this->errors['other'] = $message;
+        } else {
+            $this->errors[$field] = $message;
         }
     }
 }
