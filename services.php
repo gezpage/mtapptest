@@ -1,23 +1,50 @@
 <?php
 
-// Twig template engine
 use MindTools\TestApp\Form\RegistrationFormHandler;
 use MindTools\TestApp\Form\Validator\RegistrationFormValidator;
 use MindTools\TestApp\User\UserManager;
+
+/**
+ * 3rd party dependencies
+ */
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
+$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
+    'db.options' => array(
+        'driver'    => 'pdo_mysql',
+        'host'      => 'localhost',
+        'dbname'    => 'mindtools',
+        'user'      => 'root',
+        'password'  => 'docker',
+        'charset'   => 'utf8',
+    ),
+));
+
+$app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
+    'host' => '127.0.0.1',
+    'port' => '25',
+    'username' => null,
+    'password' => null,
+    'encryption' => null,
+    'auth_mode' => null
+));
+
+/**
+ * Project (user) dependencies
+ */
+
 $app['user_storage'] = $app->share(function($app) {
-    return new MindTools\TestApp\User\Storage\MysqlStorage();
+    return new MindTools\TestApp\User\Storage\MysqlStorage($app['db']);
 });
 
 $app['user_manager'] = $app->share(function($app) {
     return new UserManager($app['user_storage']);
 });
 
-$app['registration_form_validator'] = $app->share(function($app) {
+$app['registration_form_validator'] = $app->share(function() {
     return new RegistrationFormValidator();
 });
 

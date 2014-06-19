@@ -21,7 +21,7 @@ class RegistrationFormSpec extends ObjectBehavior
 
     function it_should_display_the_form_template(\Twig_Environment $twig)
     {
-        $twig->render('registration_form.html.twig')
+        $twig->render('registration_form.html.twig', Argument::type('array'))
             ->shouldBeCalled()
             ->willReturn('html');
 
@@ -30,7 +30,9 @@ class RegistrationFormSpec extends ObjectBehavior
 
     function it_should_handle_the_form_post(\Twig_Environment $twig, RegistrationFormHandler $handler, User $user)
     {
-        $handler->handle(Argument::type('array'))
+        $post = array('post array');
+
+        $handler->handle($post)
             ->shouldBeCalled()
             ->willReturn($user);
 
@@ -38,6 +40,6 @@ class RegistrationFormSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn('html');
 
-        $this->handleFormPost()->shouldReturn('html');
+        $this->handleFormPost($post)->shouldReturn('html');
     }
 }

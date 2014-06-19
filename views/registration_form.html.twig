@@ -1,32 +1,56 @@
 {% extends 'layout.html.twig' %}
 
+{% block title %}Your Personal Learning Plan{% endblock %}
+
 {% block content %}
 
-<div>
-    <form role="form">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name">
-        </div>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
-        </div>
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <label for="password_confirm">Password</label>
-            <input type="password" class="form-control" name="password_confirm" id="password_confirm" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
+<h2>Register with Mind Tools</h2>
 
-</div>
+<p>
+    <img class="pull-right" alt="Registration" src="/images/registration.jpg" />
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras venenatis vehicula est,
+    ac fermentum mauris tincidunt vel. Fusce dignissim, augue a placerat imperdiet, velit
+    mauris auctor ligula, id rhoncus odio mauris eget ipsum. Aliquam et diam quis lectus
+    imperdiet ultricies cursus at mi. Morbi est elit, vulputate nec consequat quis, ornare
+    sed ipsum. Curabitur rutrum ipsum nec nisi placerat interdum. Fusce eget tellus nec
+    justo vulputate volutpat at nec quam. Proin aliquet odio in erat dignissim rutrum. Sed
+    in congue sem. Nam adipiscing venenatis dignissim. Nullam consequat egestas ipsum vitae
+    hendrerit. Curabitur a felis urna.
+</p>
+
+<h3>
+    Register with Mind Tools to start using your Personal Learning Plan
+</h3>
+
+<form role="form" method="post" action="/register">
+    <div class="form-group{% if errors.name is defined %} has-error has-feedback{% endif %}">
+        <label for="name">Name (*)</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" {% if post.name is defined %}value="{{ post.name }}"{% endif %}>
+        {% if errors.name is defined %}<p class="text-danger">{{ errors.name }}</p>{% endif %}
+    </div>
+    <div class="form-group{% if errors.email is defined %} has-error has-feedback{% endif %}">
+        <label for="email">Email address (*)</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" {% if post.email is defined %}value="{{ post.email }}"{% endif %}>
+        {% if errors.email is defined %}<p class="text-danger">{{ errors.email }}</p>{% endif %}
+    </div>
+    <div class="form-group{% if errors.username is defined %} has-error has-feedback{% endif %}">
+        <label for="username">Username (*)</label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" {% if post.username is defined %}value="{{ post.username }}"{% endif %}>
+        {% if errors.username is defined %}<p class="text-danger">{{ errors.username }}</p>{% endif %}
+    </div>
+    <div class="form-group{% if errors.password is defined %} has-error has-feedback{% endif %}">
+        <label for="password">Password (*)</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" {% if post.password is defined %}value="{{ post.password }}"{% endif %}>
+        {% if errors.password is defined %}<p class="text-danger">{{ errors.password }}</p>{% endif %}
+    </div>
+    <div class="form-group{% if errors.password_confirm is defined %} has-error has-feedback{% endif %}">
+        <label for="password_confirm">Password (*)</label>
+        <input type="password" class="form-control" name="password_confirm" id="password_confirm" placeholder="Password" {% if post.password_confirm is defined %}value="{{ post.password_confirm }}"{% endif %}>
+        {% if errors.password_confirm is defined %}<p class="text-danger">{{ errors.password_confirm }}</p>{% endif %}
+    </div>
+    <button type="submit" class="btn btn-default pull-right">Subscribe to mailing list</button>
+</form>
+
+<p>(*) Required</p>
 
 {% endblock %}

@@ -2,14 +2,28 @@
 
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
 </head>
 
 <body>
 
 <div style="margin:auto; width:500px;">
-{% block content %}
-    Welcome!
-{% endblock %}
+
+    <h1>{% block title %}Test App{% endblock %}</h1>
+
+    <div id="navigation">
+        <hr/>
+        {% block navigation %}
+            <a href="/">Home</a>
+        {% endblock %}
+        <hr/>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <hr/>
+
 </div>
 
 </body>

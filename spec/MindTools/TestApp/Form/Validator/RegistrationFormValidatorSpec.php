@@ -2,7 +2,6 @@
 
 namespace spec\MindTools\TestApp\Form\Validator;
 
-use MindTools\TestApp\Form\Validator\FormValidationException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -20,28 +19,17 @@ class RegistrationFormValidatorSpec extends ObjectBehavior
         $this->validate($post)->shouldReturn(true);
     }
 
-    function it_should_collect_validation_errors()
+    function it_should_throw_validation_exception_if_passwords_do_not_match()
     {
-        $post = array(
-            'name' => '',
-            'email' => '',
-            'username' => '',
-            'password' => '',
-        );
+        $post = $this->makeValidPostArray();
+        $post['password_confirm'] = 'Au43kl231111';
 
-        try {
-            $this->validate($post);
-        } catch (FormValidationException $e) {
-            foreach ($e->getValidationErrors() as $field => $error) {
-                $error->shouldBeString();
-                $field->shouldBeString();
-            }
-        }
+        $this->shouldThrow('MindTools\TestApp\Form\Validator\FormValidationException')->duringValidate($post);
     }
 
     function it_should_throw_validation_exception_if_fields_are_missing()
     {
-        foreach (array('username', 'name', 'email', 'password') as $field) {
+        foreach (array('username', 'name', 'email', 'password', 'password_confirm') as $field) {
             $post = $this->makeValidPostArray();
             unset($post[$field]);
 
@@ -114,6 +102,7 @@ class RegistrationFormValidatorSpec extends ObjectBehavior
             'email' => 'gezpage@test.com',
             'username' => 'gezpage',
             'password' => 'Au43kl23',
+            'password_confirm' => 'Au43kl23',
         );
 
         return $post;

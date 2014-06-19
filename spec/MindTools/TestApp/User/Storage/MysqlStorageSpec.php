@@ -2,6 +2,7 @@
 
 namespace spec\MindTools\TestApp\User\Storage;
 
+use Doctrine\DBAL\Connection;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -13,8 +14,20 @@ class MysqlStorageSpec extends ObjectBehavior
         $this->shouldImplement('MindTools\TestApp\User\Storage\StorageInterface');
     }
 
-    function it_should_create_a_user()
+    function let(Connection $dbal)
     {
+        $this->beConstructedWith($dbal);
+    }
+
+    function it_should_create_a_user(Connection $dbal)
+    {
+        $dbal->insert('users', Argument::type('array'))
+            ->shouldBeCalled();
+
+        $dbal->lastInsertId()
+            ->shouldBeCalled()
+            ->willReturn(1);
+
         $user = $this->createUser('gez', 'Gez Page', 'gezpage@test.com', 'password');
         $user->shouldHaveType('MindTools\TestApp\Model\User');
     }

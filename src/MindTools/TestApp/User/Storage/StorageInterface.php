@@ -2,6 +2,8 @@
 
 namespace MindTools\TestApp\User\Storage;
 
+use MindTools\TestApp\Model\User;
+
 /**
  * Class StorageInterface
  * 
@@ -13,7 +15,10 @@ interface StorageInterface
      * @param string $username
      * @param string $name
      * @param string $email
-     * @param string $password
      */
-    public function createUser($username, $name, $email, $password);
+    public function createUser($username, $name, $email);
+
+    public function findUser($username);
+
+    public function updateUser(User $user);
 }

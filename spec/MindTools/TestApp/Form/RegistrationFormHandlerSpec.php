@@ -27,6 +27,7 @@ class RegistrationFormHandlerSpec extends ObjectBehavior
             'email' => 'gezpage@test.com',
             'username' => 'gez',
             'password' => 'password',
+            'password_confirm' => 'password',
         );
 
         $validator->validate($post)
