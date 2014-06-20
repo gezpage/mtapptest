@@ -2,10 +2,23 @@
 
 namespace MindTools\TestApp\Form\Validator;
 
+/**
+ * Class RegistrationFormValidator
+ *
+ * @package MindTools\TestApp\Form\Validator
+ */
 class RegistrationFormValidator
 {
+    /**
+     * @var array
+     */
     protected $errors = array();
 
+    /**
+     * @param array $post
+     *
+     * @return bool
+     */
     public function validate(array $post)
     {
         // Preliminary check field keys exist and have values
@@ -14,12 +27,16 @@ class RegistrationFormValidator
 
         // Field specific checks
         $this->validateUsername($post['username']);
-        $this->validatePassword($post['password'], $post['password_confirm']);
+        $this->validatePassword($post['password']);
+        $this->validatePasswordConfirmation($post['password'], $post['password_confirm']);
         $this->checkValidation();
 
         return true;
     }
 
+    /**
+     * @param array $post
+     */
     protected function validateFields(array $post)
     {
         foreach (array('username', 'name', 'email', 'password', 'password_confirm') as $field) {
@@ -34,6 +51,9 @@ class RegistrationFormValidator
         }
     }
 
+    /**
+     * @param string $username
+     */
     protected function validateUsername($username)
     {
         if (strlen($username) < 4) {
@@ -47,7 +67,10 @@ class RegistrationFormValidator
         }
     }
 
-    protected function validatePassword($password, $passwordConfirmation)
+    /**
+     * @param string $password
+     */
+    protected function validatePassword($password)
     {
         if (strlen($password) < 8) {
             return $this->validationError('Password must be at least 8 characters', 'password');
@@ -58,11 +81,23 @@ class RegistrationFormValidator
         if (0 === preg_match('/[A-Z]/', $password)) {
             return $this->validationError('Password must have at least one uppercase letter.', 'password');
         }
+    }
+
+    /**
+     * @param string $password
+     * @param string $passwordConfirmation
+     */
+    protected function validatePasswordConfirmation($password, $passwordConfirmation)
+    {
         if ($password !== $passwordConfirmation) {
             return $this->validationError('Passwords must match', 'password_confirm');
         }
     }
 
+    /**
+     * @param string $message
+     * @param string $field
+     */
     protected function validationError($message, $field = null)
     {
         if (null === $field) {
@@ -72,6 +107,9 @@ class RegistrationFormValidator
         }
     }
 
+    /**
+     * @throws FormValidationException
+     */
     public function checkValidation()
     {
         if (count($this->errors) > 0) {

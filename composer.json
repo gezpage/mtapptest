@@ -18,7 +18,8 @@
         "pimple/pimple": "~1.0",
         "symfony/routing": "~2.5",
         "silex/silex": "~1.2",
-        "doctrine/dbal": "~2.2"
+        "doctrine/dbal": "~2.2",
+        "ircmaxell/password-compat": "~1.0"
     },
     "config": {
         "bin-dir": "bin"

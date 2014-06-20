@@ -9,6 +9,15 @@ namespace MindTools\TestApp\Model;
  */
 class User
 {
+    /** @const string */
+    const STATUS_AWAITING_VERIFICATION = 'awaiting_verification';
+
+    /** @const string */
+    const STATUS_ENABLED = 'enabled';
+
+    /** @const string */
+    const STATUS_DISABLED = 'disabled';
+
     /** @var int */
     private $id;
 
@@ -22,7 +31,13 @@ class User
     private $email;
 
     /** @var string */
-    private $password;
+    private $passwordHash;
+
+    /** @var string */
+    private $status;
+
+    /** @var string */
+    private $verificationCode = null;
 
     /**
      * @param int $id
@@ -73,19 +88,19 @@ class User
     }
 
     /**
-     * @param string $password
+     * @param string $passwordHash
      */
-    public function setPassword($password)
+    public function setPasswordHash($passwordHash)
     {
-        $this->password = $password;
+        $this->passwordHash = $passwordHash;
     }
 
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPasswordHash()
     {
-        return $this->password;
+        return $this->passwordHash;
     }
 
     /**
@@ -104,4 +119,35 @@ class User
         return $this->username;
     }
 
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $verificationCode
+     */
+    public function setVerificationCode($verificationCode)
+    {
+        $this->verificationCode = $verificationCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVerificationCode()
+    {
+        return $this->verificationCode;
+    }
 }

@@ -23,32 +23,39 @@
 </h3>
 
 <form role="form" method="post" action="/register">
+
     <div class="form-group{% if errors.name is defined %} has-error has-feedback{% endif %}">
         <label for="name">Name (*)</label>
         <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" {% if post.name is defined %}value="{{ post.name }}"{% endif %}>
         {% if errors.name is defined %}<p class="text-danger">{{ errors.name }}</p>{% endif %}
     </div>
+
     <div class="form-group{% if errors.email is defined %} has-error has-feedback{% endif %}">
         <label for="email">Email address (*)</label>
         <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" {% if post.email is defined %}value="{{ post.email }}"{% endif %}>
         {% if errors.email is defined %}<p class="text-danger">{{ errors.email }}</p>{% endif %}
     </div>
+
     <div class="form-group{% if errors.username is defined %} has-error has-feedback{% endif %}">
         <label for="username">Username (*)</label>
         <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" {% if post.username is defined %}value="{{ post.username }}"{% endif %}>
         {% if errors.username is defined %}<p class="text-danger">{{ errors.username }}</p>{% endif %}
     </div>
+
     <div class="form-group{% if errors.password is defined %} has-error has-feedback{% endif %}">
         <label for="password">Password (*)</label>
         <input type="password" class="form-control" name="password" id="password" placeholder="Password" {% if post.password is defined %}value="{{ post.password }}"{% endif %}>
         {% if errors.password is defined %}<p class="text-danger">{{ errors.password }}</p>{% endif %}
     </div>
+
     <div class="form-group{% if errors.password_confirm is defined %} has-error has-feedback{% endif %}">
         <label for="password_confirm">Password (*)</label>
         <input type="password" class="form-control" name="password_confirm" id="password_confirm" placeholder="Password" {% if post.password_confirm is defined %}value="{{ post.password_confirm }}"{% endif %}>
         {% if errors.password_confirm is defined %}<p class="text-danger">{{ errors.password_confirm }}</p>{% endif %}
     </div>
-    <button type="submit" class="btn btn-default pull-right">Subscribe to mailing list</button>
+
+    <button type="submit" class="btn btn-default btn-primary pull-right">Subscribe to mailing list</button>
+
 </form>
 
 <p>(*) Required</p>

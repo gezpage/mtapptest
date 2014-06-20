@@ -6,6 +6,7 @@ use MindTools\TestApp\Form\Validator\FormValidationException;
 
 /**
  * Class RegistrationForm
+ *
  * @package MindTools\TestApp\Form
  */
 class RegistrationForm
@@ -44,16 +45,19 @@ class RegistrationForm
         ));
     }
 
+    /**
+     * @param array $post
+     *
+     * @return string|bool
+     */
     public function handleFormPost(array $post)
     {
         try {
 
             // Handle the registration should create a user and return a User object
-            $user = $this->handler->handle($post);
+            $this->handler->handle($post);
 
-            return $this->twig->render('registration_form_complete.html.twig', array(
-                'user' => $user,
-            ));
+            return true;
 
         } catch (FormValidationException $e) {
 

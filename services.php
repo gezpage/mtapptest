@@ -17,8 +17,8 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
         'driver'    => 'pdo_mysql',
         'host'      => 'localhost',
         'dbname'    => 'mindtools',
-        'user'      => 'root',
-        'password'  => 'docker',
+        'user'      => 'mindtools',
+        'password'  => 'mtpw9900',
         'charset'   => 'utf8',
     ),
 ));
@@ -36,24 +36,34 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
  * Project (user) dependencies
  */
 
+$app['password_hasher'] = $app->share(function() {
+    return new \MindTools\TestApp\User\PasswordHasher();
+});
+
+$app['email_sender'] = $app->share(function($app) {
+    return new \MindTools\TestApp\Email\EmailSender($app['mailer']);
+});
+
+$app['email_verifier'] = $app->share(function($app) {
+    return new \MindTools\TestApp\User\Verification\EmailVerification($app['email_sender'], $app['twig'], 'http://mttestapp.gezpage.com');
+});
+
 $app['user_storage'] = $app->share(function($app) {
     return new MindTools\TestApp\User\Storage\MysqlStorage($app['db']);
 });
 
 $app['user_manager'] = $app->share(function($app) {
-    return new UserManager($app['user_storage']);
+    return new UserManager($app['user_storage'], $app['email_verifier'], $app['password_hasher']);
 });
 
 $app['registration_form_validator'] = $app->share(function() {
     return new RegistrationFormValidator();
 });
 
-// Registration form handler
 $app['registration_form_handler'] = $app->share(function($app) {
     return new RegistrationFormHandler($app['user_manager'], $app['registration_form_validator']);
 });
 
-// Registration form
 $app['registration_form'] = $app->share(function($app) {
     return new MindTools\TestApp\Form\RegistrationForm($app['twig'], $app['registration_form_handler']);
 });
